@@ -1,4 +1,4 @@
-const { aiTurn } = require("./AI.js");
+const { aiTurn, emptyCells } = require("./AI.js");
 const rooms = [];
 
 const moment = require("moment");
@@ -46,7 +46,7 @@ function roomJoin(id, type, room, username) {
         mark: "X",
       };
     }
-    console.log(rom.player);
+    // console.log(rom.player);
     rooms.push(rom);
     return rom;
   } else {
@@ -69,10 +69,11 @@ function getCurrentroombyid(id) {
 }
 function getCurrentroom(rom) {
   const room = rooms.find((room) => room.room === rom);
-  console.log(room);
+  //console.log(room);
   return room;
 }
 function turn(id, no) {
+  //console.log("tr", id, no);
   const i = rooms.findIndex((rom) => id in rom.player);
   const j = parseInt(no);
   var n = "";
@@ -99,13 +100,13 @@ function turn(id, no) {
       else rooms[i].player[b].point++;
     }
     room = rooms[i];
+    // console.log(room.board);
     if (
       ca ||
       !rooms[i].board.filter((ind) => ind !== "X" && ind !== "O").length
     )
       return { line: ca, state: n, rom: room };
   }
-
   return { line: "O", state: n, rom: room };
 }
 
@@ -120,7 +121,12 @@ function roomLeave(id) {
   const index = rooms.findIndex((rom) => id in rom.player);
   if (index !== -1) return rooms.splice(index, 1)[0];
 }
-
+function setLevel(id, no) {
+  const i = rooms.findIndex((rom) => id in rom.player);
+  if (i !== -1) {
+    rooms[i].player[id + "AI"].level = parseInt(no);
+  }
+}
 function Clear(id) {
   const i = rooms.findIndex((rom) => id in rom.player);
   if (i !== -1) {
@@ -142,12 +148,15 @@ function cheakAiTurn(id) {
   if (
     i !== -1 &&
     rooms[i].type === "vsai" &&
-    rooms[i].turn === rooms[i].player[id + "AI"].mark
+    rooms[i].turn === rooms[i].player[id + "AI"].mark &&
+    emptyCells(rooms[i].board).length &&
+    cheakanswer(rooms[i].board, rooms[i].player[id].mark) === ""
   ) {
     return aiTurn(
       rooms[i].board,
       rooms[i].player[id].mark,
-      rooms[i].player[id + "AI"].mark
+      rooms[i].player[id + "AI"].mark,
+      rooms[i].player[id + "AI"].level
     );
   }
   return "";
@@ -182,4 +191,5 @@ module.exports = {
   getCurrentroombyid,
   cheakanswer,
   cheakAiTurn,
+  setLevel,
 };

@@ -44,6 +44,9 @@ a {
   color: #fff;
 }
 
+.show {
+  display: block;
+}
 .join-header {
   text-align: center;
   padding: 20px;
@@ -81,11 +84,6 @@ a {
 }
 
 .join-main input[type="text"] {
-  /* 	font-size:2vh;
-	padding: 5px;
-	height: 30px;
-	width: 100%;
-  border-radius: 1.2rem; */
   font-size: 2vh;
   padding: 10px;
   height: 4vh;
@@ -125,14 +123,32 @@ a {
   font-weight: 500;
   margin-bottom: 20px;
 }
-.start.offline {
-  width: fit-content;
-  height: fit-content;
-  margin: auto;
-  padding: 1vh;
+select {
+  background-color: transparent;
+  height: 4.5vh;
+  width: 33vh;
+  font-size: 2.5vh;
+  border: 0px;
+  text-align: center;
 }
-.start .start:hover {
-  background: blueviolet;
+select[disabled] {
+  color: #d5ff00;
+  opacity: 1;
+}
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+.dropdownContent {
+  display: none;
+  position: absolute;
+  padding-top: 20px;
+}
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+.start:hover {
+  background: rgb(28, 216, 3);
   text-decoration-color: Blue;
 }
 

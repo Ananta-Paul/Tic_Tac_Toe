@@ -3,6 +3,12 @@ var win = false;
 var socket = io();
 var Player1 = "Player-1";
 var room2 = "Player-2(X)";
+$("select").on("change", function () {
+  //alert(this.value);
+  socket.emit("level", this.value);
+  this.setAttribute("disabled", "");
+  win = false;
+});
 function Clear(arr, line) {
   for (let i = 0; i < 9; i++) {
     if (arr[i] === "O") $("#m" + i).removeClass("roundm");
@@ -33,6 +39,8 @@ socket.on("broadcast", ({ user1, user2 }) => {
   if (user2 === "Disconected...") {
     document.querySelector(".start").removeAttribute("hidden");
   }
+  if (user2 === "AI") win = true;
+  document.querySelector(".target").removeAttribute("hidden");
 });
 
 function animate(line, state, no, rom) {
@@ -90,13 +98,13 @@ function animate(line, state, no, rom) {
           para = "YOU LOST!";
           opara = "Player-2 WON!";
         }
-        if (rom.type === "offine") para = opara;
+        if (rom.type === "offline") para = opara;
         document.querySelector(".container").style.display = "none";
         document.querySelector(".start").removeAttribute("hidden");
         document.querySelector(".para").innerHTML = para;
       }
       Clear(rom.board, line);
       socket.emit("clear");
-    }, 3000);
+    }, 2000);
   }
 }

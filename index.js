@@ -7,13 +7,12 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const {
   roomJoin,
-  getCurrentroom,
   roomLeave,
   Clear,
   turn,
   getOpponent,
-  getCurrentroombyid,
   cheakAiTurn,
+  setLevel,
 } = require("./util/room.js");
 var room = "";
 var username = "";
@@ -60,8 +59,9 @@ io.on("connection", (socket) => {
     ////console.log("Button: " + no, line, state);
     if (state && rom) {
       io.to(rom.room).emit("btnanimate", { line, state, no, rom });
+
       const n = cheakAiTurn(id);
-      if (parseInt(n) >= 0) {
+      if (n !== "") {
         const t = turn(id + "AI", n);
         if (t.state && t.rom) {
           ////console.log("Buttonai: " + n, t.line, t.state);
@@ -74,6 +74,9 @@ io.on("connection", (socket) => {
         }
       }
     }
+  });
+  socket.on("level", (no) => {
+    setLevel(socket.id, no);
   });
   socket.on("clear", () => {
     const id = socket.id;

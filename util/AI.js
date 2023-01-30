@@ -54,16 +54,35 @@ function minimax(board, depth, player, hu, ai) {
 
   return best;
 }
-function aiTurn(board, hu, ai) {
+function aiTurn(board, hu, ai, level) {
   var x;
   var move;
-
-  if (emptyCells(board).length === 9) {
-    x = parseInt(Math.random() * 9);
+  var ec = emptyCells(board).length;
+  var rnd = parseInt(Math.random() * 10);
+  //console.log(ec, rnd);
+  if (ec === 9) {
+    x = parseInt(Math.random() * ec);
   } else {
-    move = minimax(board, emptyCells(board).length, ai, hu, ai);
-    x = move[0];
-    console.log("move", move);
+    move = minimax(board, 1, ai, hu, ai);
+    if (move[1] === 1) x = move[0];
+    else if (level === 1) {
+      x = parseInt(emptyCells(board)[parseInt(Math.random() * ec)]) - 1;
+    } else if (level === 2) {
+      if (rnd < 6) {
+        move = minimax(board, ec, ai, hu, ai);
+        x = move[0];
+      } else x = parseInt(emptyCells(board)[parseInt(Math.random() * ec)]) - 1;
+    } else if (level === 3) {
+      if (rnd <= 8) {
+        move = minimax(board, ec, ai, hu, ai);
+        x = move[0];
+      } else x = parseInt(emptyCells(board)[parseInt(Math.random() * ec)]) - 1;
+    }
+    // var maxi = emptyCells(board).length;
+    // if (maxi > 4) maxi = 4;
+    // move = minimax(board, maxi, ai, hu, ai);
+    // x = move[0];
+    //console.log("move", move, x);
   }
   return x.toString();
 }
@@ -88,4 +107,5 @@ function cheakanswer(ar, win) {
 }
 module.exports = {
   aiTurn,
+  emptyCells,
 };
