@@ -111,6 +111,6 @@ app.post("/", (req, res) => {
   type = req.body.type;
   res.redirect("/Game");
 });
-server.listen(3000, () => {
+server.listen(process.env.PORT||3000, () => {
   //console.log("listening on *:3000");
 });
