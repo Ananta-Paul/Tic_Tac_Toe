@@ -4,9 +4,9 @@
 Player vs Player
 Player vs AI**
 
-#Requirements:
--Node.js
--NPM
+# Requirements:
+ - Node.js
+ - NPM
 
 #Installation: 
 -Clone the repository https://github.com/<repo-name>
