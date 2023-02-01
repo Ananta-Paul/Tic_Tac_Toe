@@ -1,5 +1,5 @@
 # Tic_Tac_Toe: 
-** This is a multiplayer Tic Tac Toe game developed using Node.js, Express, and Socket.io. The game can be played in two modes: **
+**This is a multiplayer Tic Tac Toe game developed using Node.js, Express, and Socket.io. The game can be played in two modes:**
 
 - Player vs Player
 - Player vs AI 
