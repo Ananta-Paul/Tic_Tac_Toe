@@ -39,8 +39,9 @@ socket.on("broadcast", ({ user1, user2 }) => {
   if (user2 === "Disconected...") {
     document.querySelector(".start").removeAttribute("hidden");
   }
-  if (user2 === "AI") win = true;
+  if (user2 === "AI"){ win = true;
   document.querySelector(".target").removeAttribute("hidden");
+   }
 });
 
 function animate(line, state, no, rom) {
